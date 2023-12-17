@@ -28,9 +28,10 @@ class _LoginWebViewAppState extends State<LoginWebViewApp> {
   // Generate the authorization url
   final authUrl = Uri.https(constants.issuerHost, constants.authorizePath, {
     'client_id': constants.clientId,
-    'response_type': constants.responseType,
+    'response_type': 'code',
     'redirect_uri': constants.redirectUri,
     'state': constants.state,
+    //'scope': constants.scopesList.join(' '),
     // 'code_challenge': codeChallenge,
     // 'code_challenge_method': 'S256',
   });
@@ -44,10 +45,11 @@ class _LoginWebViewAppState extends State<LoginWebViewApp> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onNavigationRequest: (NavigationRequest navigation) async {
-            if (navigation.url.startsWith(
-                'https://outh.ebdaa-business.com/ebdaa-business.com')) {
+            if (  navigation.url.startsWith(
+                constants.redirectUri)) {
+
               navigation.url.contains('code=')
-                  ? constants.authCode = navigation.url.split('code=')[1]
+                  ? constants.authCode = Uri.parse(navigation.url).queryParameters['code']
                   : null;
 
               try {
@@ -57,7 +59,7 @@ class _LoginWebViewAppState extends State<LoginWebViewApp> {
                     'Content-Type': 'application/x-www-form-urlencoded'
                   },
                   body: {
-                    'grant_type': constants.grantType,
+                    'grant_type': 'authorization_code',
                     'client_id': constants.clientId,
                     'client_secret': constants.clientSecret,
                     'code': constants.authCode,
