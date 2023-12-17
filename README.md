@@ -3,6 +3,7 @@
 
 ## Description
 This project demonstrates the implementation of the OAuth 2.0 authorization flow with Proof Key for Code Exchange (PKCE) for authentication. It provides a web view for users to authenticate with a third-party service and obtain an authorization code, which is then exchanged for an access token.
+more about the flow : https://www.appsdeveloperblog.com/pkce-verification-in-authorization-code-grant/
 
 ## Features
 - Implements the PKCE flow for secure authentication
